@@ -81,8 +81,8 @@ public class TransaccionServiceImpl implements TransaccionService {
             transaccionEntity.setMonto(transaccion.getMonto());
             transaccionEntity.setFecha(LocalDateTime.now().toString());
             transaccionEntity.setOperacion(operacion);
-            transaccion.setNumeroCuentaOrigen(transaccion.getNumeroCuentaOrigen());
-            transaccion.setNumeroCuentaDestino(transaccion.getNumeroCuentaDestino());
+            transaccionEntity.setNumeroCuentaOrigen(transaccion.getNumeroCuentaOrigen());
+            transaccionEntity.setNumeroCuentaDestino(transaccion.getNumeroCuentaDestino());
             _transaccionRepository.save(transaccionEntity);
             return true;
         }

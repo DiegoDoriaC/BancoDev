@@ -3,8 +3,6 @@ package com.bancoDev.models;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import com.bancoDev.models.enums.Estado;
 import com.bancoDev.models.enums.PlazoMeses;
 
@@ -16,7 +14,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,9 +39,7 @@ public class PrestamoEntity {
     @Enumerated(EnumType.STRING)
     private PlazoMeses plazoMeses;
 
-    @CreatedDate
     @Column(name = "fecha_aprobacion")
-    @Setter(AccessLevel.NONE)
     private LocalDateTime fechaAprobacion;
 
     @Enumerated(EnumType.STRING)

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bancoDev.DTOs.ApiResponse;
 import com.bancoDev.DTOs.request.PagoRealizarRequest;
+import com.bancoDev.DTOs.request.RealizarPagoTransaccionRequest;
 import com.bancoDev.DTOs.response.PagoResponse;
 import com.bancoDev.services.PagoService;
 
@@ -27,7 +28,7 @@ public class PagoController {
 
     @GetMapping("/listarTodosLosPagos/{idPrestamo}")
     public ResponseEntity<ApiResponse<List<PagoResponse>>> listarTodosLosPagos(@PathVariable Long idPrestamo){
-        ApiResponse<List<PagoResponse>> respuesta = _pagoService.listarPagosPagados(idPrestamo);
+        ApiResponse<List<PagoResponse>> respuesta = _pagoService.listarTodosLosPagos(idPrestamo);
         if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
@@ -56,6 +57,13 @@ public class PagoController {
     @PutMapping("/realizarPago")
     public ResponseEntity<ApiResponse<PagoResponse>> realizarPago(@RequestBody PagoRealizarRequest pagoRealizar){
         ApiResponse<PagoResponse> respuesta = _pagoService.realizarPago(pagoRealizar);
+        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    }
+
+    @PutMapping("/realizarPagoTransaccion")
+    public ResponseEntity<ApiResponse<PagoResponse>> realizarPagoTransaccion(@RequestBody RealizarPagoTransaccionRequest pagoRealizar){
+        ApiResponse<PagoResponse> respuesta = _pagoService.realizarPagoTransaccion(pagoRealizar);
         if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }

@@ -1,0 +1,15 @@
+<div class="contenedor-listado-coutas" *ngIf="listadoPagos.length > 0; else noData">
+  <div [ngClass]="{
+    'prestamoPagado':item.estado == 'PAGADO',
+    'prestamoAtrasado':item.estado == 'ATRASADO',
+    'prestamoPendiente':item.estado == 'PENDIENTE',
+    }" [routerLink]="['/usuario/detalleCuota', item.id]" class="item-couta" *ngFor="let item of listadoPagos">
+    <p class="monoto-pagar">Monto: {{ item.montoPagado }}</p>
+    <p class="fecha-vencimiento">Vencimiento: {{ item.fechaPagoEstimada }}</p>
+    <p class="estado">Estado: {{ item.estado }}</p>
+  </div>
+</div>
+
+<ng-template #noData>
+  <h4>{{ mensaje }}</h4>
+</ng-template>

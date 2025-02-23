@@ -26,14 +26,14 @@ public class TransaccionController {
     @GetMapping("/listarTransacciones/{numeroCuenta}")
     public ResponseEntity<ApiResponse<List<TransaccionSimpleResponse>>> listarTransaccion(@PathVariable String numeroCuenta){
         ApiResponse<List<TransaccionSimpleResponse>> respuesta = _transaccionService.listarTransaccion(numeroCuenta);
-        if(respuesta.isStatus()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        if(!respuesta.isStatus()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("/detalleTransaccion/{id}")
     public ResponseEntity<ApiResponse<TransaccionCompletaResponse>> detalleTransaccion(@PathVariable String id){
         ApiResponse<TransaccionCompletaResponse> respuesta = _transaccionService.detalleTransaccion(id);
-        if(respuesta.isStatus()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        if(!respuesta.isStatus()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

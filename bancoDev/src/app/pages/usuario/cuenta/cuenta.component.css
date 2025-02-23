@@ -1,0 +1,30 @@
+.contenedor-cuenta{
+  width: 500px;
+  margin: 270px auto 0;
+  border: 4px dashed black;
+  padding: 10px 45px;
+  border-radius: 15px;
+}
+
+
+.caja-texto {
+  font-size: 30px;
+}
+
+.caja-boton{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.boton{
+  background-color: rgb(34, 139, 34);
+  padding: 8px 13px;
+  margin: 10px 0px 25px;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  text-decoration: none;
+}

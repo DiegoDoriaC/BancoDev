@@ -1,0 +1,9 @@
+<div class="contenedor-cuenta">
+  <div class="caja-texto">
+    <p class="texto-num-cuenta">Numero de Cuenta: <strong>{{ numeroCuenta }}</strong></p>
+    <p class="dinero-actual">Dinero Actual: <strong>{{ dineroActual }}</strong></p>
+  </div>
+  <div class="caja-boton">
+    <a class="boton" [routerLink]="['listaTransaccion', numeroCuenta]">Ver Transacciones</a>
+  </div>
+</div>

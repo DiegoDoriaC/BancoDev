@@ -1,0 +1,16 @@
+<div class="contenedor-listado-coutas" *ngIf="listadoPagos.length > 0; else noData">
+  <ng-container *ngFor="let item of listadoPagos">
+    <div class="item-couta" *ngIf="item.estado == 'PENDIENTE'" >
+      <div class="item-cuota-texto">
+        <p class="monoto-pagar">Monto: {{ item.montoPagado }}</p>
+        <p class="fecha-vencimiento">Vencimiento: {{ item.fechaPagoEstimada }}</p>
+        <p class="estado">Estado: {{ item.estado }}</p>
+        <button type="submit" (click)="registrarPagoDeCuota(item.id, item.montoPagado)">Realizar Pago</button>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #noData>
+  <h4>{{ mensaje }}</h4>
+</ng-template>

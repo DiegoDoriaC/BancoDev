@@ -13,9 +13,10 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Long> {
 
     @NativeQuery("select * from tbl_clientes where id = ?1 and activo = true")
     ClienteEntity findByIdActivo(Long id);
-
+    
+    ClienteEntity findByDni(String dni);
     List<ClienteEntity> findByActivo(boolean activo);
-    ClienteEntity findByCorreoIgnoreCaseAndContraseniaIgnoreCase(String correo, String password);
+    ClienteEntity findByCorreoAndContrasenia(String correo, String password);
     ClienteEntity findByCorreoIgnoreCase(String correo);
     ClienteEntity findByDniIgnoreCase(String correo);
 

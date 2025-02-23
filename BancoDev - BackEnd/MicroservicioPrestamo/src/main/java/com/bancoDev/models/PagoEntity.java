@@ -50,6 +50,7 @@ public class PagoEntity {
     private EstadoPago estado;
 
     @Column(name = "tipo_pago")
+    @Enumerated(EnumType.STRING)
     private TipoPago tipoPago;
 
     @Column(name = "empleado_id")

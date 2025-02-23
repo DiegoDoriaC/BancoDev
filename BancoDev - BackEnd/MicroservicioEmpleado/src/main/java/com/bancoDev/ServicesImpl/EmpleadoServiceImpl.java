@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bancoDev.DTOs.ApiResponse;
 import com.bancoDev.DTOs.Response.EmpleadoResponse;
+import com.bancoDev.DTOs.Response.EmpleadoSimpleResponse;
 import com.bancoDev.Models.EmpleadoEntity;
 import com.bancoDev.Repositories.EmpleadoRepository;
 import com.bancoDev.Services.EmpleadoService;
@@ -83,6 +84,24 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             .data(EmpleadoMapper.empleadoEntityToEmpleadoResponse(empleadoEncontrado))
             .status(true)
             .build();
+    }
+
+    @Override
+    public ApiResponse<EmpleadoSimpleResponse> mostrarNombreEmpleadoPorId(Long id) {
+        ApiResponse<EmpleadoResponse> respuesta = buscarPorId(id);
+        if(!respuesta.isStatus()) {
+            return ApiResponse.<EmpleadoSimpleResponse>builder()
+            .message(respuesta.getMessage())
+            .data(null)
+            .status(false)
+            .build();
+        }
+        EmpleadoSimpleResponse empleadoResponse = new EmpleadoSimpleResponse(respuesta.getData().getNombre() + " " + respuesta.getData().getApellido());
+        return ApiResponse.<EmpleadoSimpleResponse>builder()
+        .message("Nombres del empleado obtenido correctamente")
+        .data(empleadoResponse)
+        .status(true)
+        .build();
     }
 
 }

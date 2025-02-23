@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bancoDev.DTOs.ApiResponse;
 import com.bancoDev.DTOs.Response.EmpleadoResponse;
+import com.bancoDev.DTOs.Response.EmpleadoSimpleResponse;
 import com.bancoDev.Services.EmpleadoService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,14 +34,20 @@ public class EmpleadoController {
     @GetMapping("buscarPorId/{id}")
     public ResponseEntity<ApiResponse<EmpleadoResponse>> buscarPorId(@PathVariable Long id) {
         ApiResponse<EmpleadoResponse> respuesta = _empleadoService.buscarPorId(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    }
+
+    @GetMapping("buscarNombresPorId/{id}")
+    public ResponseEntity<ApiResponse<EmpleadoSimpleResponse>> mostrarNombreEmpleadoPorId(@PathVariable Long id) {
+        ApiResponse<EmpleadoSimpleResponse> respuesta = _empleadoService.mostrarNombreEmpleadoPorId(id);
+        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("buscarPorCorreoPassword")
-    public ResponseEntity<ApiResponse<EmpleadoResponse>> buscarPorId(@RequestParam String Correo, @RequestParam String password) {
-        ApiResponse<EmpleadoResponse> respuesta = _empleadoService.buscarPorCorreoPassword(Correo, password);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+    public ResponseEntity<ApiResponse<EmpleadoResponse>> buscarPorCorreoPassword(@RequestParam String correo, @RequestParam String password) {
+        ApiResponse<EmpleadoResponse> respuesta = _empleadoService.buscarPorCorreoPassword(correo, password);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

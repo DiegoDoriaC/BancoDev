@@ -1,0 +1,26 @@
+<div class="contenedor-lista-transaccion" *ngIf="listadoTransacciones.length > 0; else noData">
+  <div class="contenedor-item-transaccion" *ngFor="let item of listadoTransacciones">
+    <a [routerLink]="['/usuario/detalleTransaccion', item.numeroTransaccion]" class="enlace">
+      <div class="item-transaccion">
+        <div class="item-izquierda">
+          <p class="num-transaccion">Transaccion: {{ item.numeroTransaccion }}</p>
+          <p class="fecha">Fecha: {{ item.fecha }}</p>
+        </div>
+        <div class="item-derecha">
+          <p class="monto-transaccion">Monto: {{ item.monto }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+<ng-template #noData>
+  <h4 class="item-no-data">Ninguna transaccion encontrada</h4>
+</ng-template>
+<div class="contenedor-volver">
+  <a routerLink="/usuario">volver</a>
+</div>
+
+
+<!-- Este es el listado que aparecera a la item-izquierda
+al a derecha aparecera en detalle de la Transaccion
+y abajo aparecera el boton "volver" que regresara al detalle cuenta -->

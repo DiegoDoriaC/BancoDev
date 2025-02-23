@@ -1,0 +1,44 @@
+.prestamoPagado{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  background-color: rgb(12, 151, 35);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.prestamoPagado:hover{
+  background-color: rgb(8, 109, 25);
+}
+
+.prestamoAtrasado{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  background-color: rgb(179, 168, 23);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.prestamoAtrasado:hover{
+  background-color: rgb(124, 117, 16);
+}
+
+.prestamoPendiente{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  background-color: rgb(141, 16, 16);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.prestamoPendiente:hover{
+  background-color: rgb(92, 11, 11);
+}

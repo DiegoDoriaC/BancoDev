@@ -45,6 +45,13 @@ public class PrestamoController {
         if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
+    
+    @GetMapping("/buscarPrestamosPorDniCliente/{dni}")
+    public ResponseEntity<ApiResponse<List<PrestamoResponse>>> buscarPrestamosPorDniCliente(String dni){
+        ApiResponse<List<PrestamoResponse>> respuesta = _prestamoService.buscarPrestamosPorDniCliente(dni);
+        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
+        return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+    }
 
     @GetMapping("/buscarPrestamo/{id}")
     public ResponseEntity<ApiResponse<PrestamoResponse>> buscarPrestamo(@PathVariable Long id){
@@ -56,7 +63,7 @@ public class PrestamoController {
     @PostMapping("/crearPrestamo")
     public ResponseEntity<ApiResponse<PrestamoResponse>> crearPrestamo(@RequestBody PrestamoCrearDto prestamo) {
         ApiResponse<PrestamoResponse> respuesta = _prestamoService.crearPrestamo(prestamo);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
+        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

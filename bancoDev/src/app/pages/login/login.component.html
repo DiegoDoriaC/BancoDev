@@ -1,0 +1,23 @@
+<body>
+  <main>
+      <article>
+          <section>
+              <form [formGroup]="formularioIniciarSesion" (submit)="onSubmit()">
+                  <h1>Inicia Sesion</h1>
+
+                  <input type="email" formControlName="correo" placeholder="Correo electr&oacute;nico"><br/>
+                  <input type="password" formControlName="password" placeholder="Contrase&ntilde;a"><br/>
+                  <button type="submit">Entrar</button>
+                  <button type="reset">Limpiar</button>
+
+                  <p>Aun no tienes cuenta ?</p>
+                  <p>
+                    <a routerLink="registrarse"><strong>Registrate</strong></a>
+                  </p>
+                  <a id="volver" routerLink="/bancoDev">Volver</a>
+              </form>
+          </section>
+      </article>
+  </main>
+
+</body>

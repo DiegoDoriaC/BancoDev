@@ -1,0 +1,14 @@
+<div class="contenedor-formulario">
+  <form [formGroup]="formularioConsultarDni" (submit)="onSubmit()">
+    <div class="contenedor-dni">
+      <label for="dni">DNI</label>
+      <input type="number" formControlName="dni" id="dni">
+    </div>
+    <button type="submit">Consultar</button>
+    <button type="reset">Limpiar</button>
+  </form>
+</div>
+
+<ng-template *ngIf="mensaje.length > 1">
+  <h4>{{ mensaje }}</h4>
+</ng-template>

@@ -1,0 +1,13 @@
+<div class="contenedor-prestamos" *ngIf="listadoPrestamos.length > 0; else noData">
+  <div [routerLink]="['/cajero/listarCuota', item.id]" class="prestamo" *ngFor="let item of listadoPrestamos">
+    <p class="monto">Monto Prestamo: {{ item.monto }}</p>
+    <p class="plazo">Plazo meses: {{ item.plazoMeses }}</p>
+    <p class="fecha">Fecha aprobacion: {{ item.fechaAprobacion }}</p>   <!-- aprobado -->
+  </div>
+</div>
+
+<ng-template #noData>
+  <h4>{{ mensaje }}</h4>
+</ng-template>
+
+

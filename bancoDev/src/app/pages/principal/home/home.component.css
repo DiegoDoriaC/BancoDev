@@ -1,0 +1,18 @@
+.contenedor-principal{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contenedor-imagen > img{
+    width: 140%;
+  }
+  .contenedor-titulo{
+    font-size: 30px;
+    text-align: center;
+  }
+}
+

@@ -2,15 +2,20 @@ package com.bancoDev.servicesImpl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.bancoDev.DTOs.ApiResponse;
 import com.bancoDev.DTOs.request.PagoCrearRequest;
 import com.bancoDev.DTOs.request.PrestamoCrearDto;
 import com.bancoDev.DTOs.response.PrestamoResponse;
+import com.bancoDev.client.interfaces.ClienteClient;
+import com.bancoDev.client.interfaces.EmpleadoClient;
+import com.bancoDev.client.models.ClienteResponse;
+import com.bancoDev.client.models.ClienteSimpleResponse;
+import com.bancoDev.client.models.EmpleadoSimpleResponse;
 import com.bancoDev.models.PrestamoEntity;
 import com.bancoDev.models.enums.Estado;
 import com.bancoDev.models.enums.PlazoMeses;
@@ -27,6 +32,8 @@ public class PrestamoServiceImpl implements PrestamoService {
 
     private final PrestamoRepository _prestamoRepository;
     private final PagoService _pagoService;
+    private final ClienteClient _clienteClient;
+    private final EmpleadoClient _empleadoClient;
 
     @Override
     public ApiResponse<List<PrestamoResponse>> listarTodosLosPrestamos(Long idCliente) {
@@ -41,8 +48,12 @@ public class PrestamoServiceImpl implements PrestamoService {
         try{
             List<PrestamoResponse> prestamosMappeados = listarPrestamos.stream().map( x -> {
                 PrestamoResponse prestamoMappeado = PrestamoMapper.prestamoEntiyToPrestamosResponse(x);
-                prestamoMappeado.setNombresEmpleado("Falta traer los nombres del empleado");
-                prestamoMappeado.setNombresCliente("Falta traer los nombres del cliente");
+                try {
+                    prestamoMappeado.setNombresEmpleado(nombresEmpleado(x.getEmpleadoId()).getData().getNombres());
+                    prestamoMappeado.setNombresCliente(nombresCliente(x.getClienteId()).getData().getNombres());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return prestamoMappeado;
             }).toList();
             return ApiResponse.<List<PrestamoResponse>>builder()
@@ -62,7 +73,7 @@ public class PrestamoServiceImpl implements PrestamoService {
 
     @Override
     public ApiResponse<List<PrestamoResponse>> listarPrestamosPagados(Long idCliente) {
-        List<PrestamoEntity> listarPrestamos = _prestamoRepository.findByClienteIdAndEstadoIgnoreCase(idCliente.intValue(), "PAGADO");
+        List<PrestamoEntity> listarPrestamos = _prestamoRepository.findByClienteIdAndEstado(idCliente.intValue(), Estado.CANCELADO);
         if(listarPrestamos.isEmpty()){
             return ApiResponse.<List<PrestamoResponse>>builder()
             .message("Ningun prestamo pagado encontrado")
@@ -73,8 +84,12 @@ public class PrestamoServiceImpl implements PrestamoService {
         try{
             List<PrestamoResponse> prestamosMappeados = listarPrestamos.stream().map( x -> {
                 PrestamoResponse prestamoMappeado = PrestamoMapper.prestamoEntiyToPrestamosResponse(x);
-                prestamoMappeado.setNombresEmpleado("Falta traer los nombres del empleado");
-                prestamoMappeado.setNombresCliente("Falta traer los nombres del cliente");
+                try {
+                    prestamoMappeado.setNombresEmpleado(nombresEmpleado(x.getEmpleadoId()).getData().getNombres());
+                    prestamoMappeado.setNombresCliente(nombresCliente(x.getClienteId()).getData().getNombres());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return prestamoMappeado;
             }).toList();
             return ApiResponse.<List<PrestamoResponse>>builder()
@@ -94,7 +109,7 @@ public class PrestamoServiceImpl implements PrestamoService {
 
     @Override
     public ApiResponse<List<PrestamoResponse>> listarPrestamosPendientes(Long idCliente) {
-        List<PrestamoEntity> listarPrestamos = _prestamoRepository.findByClienteIdAndEstadoIgnoreCase(idCliente.intValue(), "PENDIENTE");
+        List<PrestamoEntity> listarPrestamos = _prestamoRepository.findByClienteIdAndEstado(idCliente.intValue(), Estado.PENDIENTE);
         if(listarPrestamos.isEmpty()){
             return ApiResponse.<List<PrestamoResponse>>builder()
             .message("Ningun prestamo pendiente encontrado")
@@ -105,8 +120,12 @@ public class PrestamoServiceImpl implements PrestamoService {
         try{
             List<PrestamoResponse> prestamosMappeados = listarPrestamos.stream().map( x -> {
                 PrestamoResponse prestamoMappeado = PrestamoMapper.prestamoEntiyToPrestamosResponse(x);
-                prestamoMappeado.setNombresEmpleado("Falta traer los nombres del empleado");
-                prestamoMappeado.setNombresCliente("Falta traer los nombres del cliente");
+                try {
+                    prestamoMappeado.setNombresEmpleado(nombresEmpleado(x.getEmpleadoId()).getData().getNombres());
+                    prestamoMappeado.setNombresCliente(nombresCliente(x.getClienteId()).getData().getNombres());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return prestamoMappeado;
             }).toList();
             return ApiResponse.<List<PrestamoResponse>>builder()
@@ -125,6 +144,19 @@ public class PrestamoServiceImpl implements PrestamoService {
     }
 
     @Override
+    public ApiResponse<List<PrestamoResponse>> buscarPrestamosPorDniCliente(String dni) {
+        ApiResponse<ClienteResponse> clienteEncontrado = _clienteClient.buscarPorDni(dni);
+        if(!clienteEncontrado.isStatus()){
+            return ApiResponse.<List<PrestamoResponse>>builder()
+            .message(clienteEncontrado.getMessage())
+            .data(null)
+            .status(false)
+            .build(); 
+        }
+        return listarPrestamosPendientes(clienteEncontrado.getData().getId());
+    }
+
+    @Override
     public ApiResponse<PrestamoResponse> buscarPrestamo(Long id) {
         PrestamoEntity prestamoOptional = _prestamoRepository.findById(id).orElse(null);
         if(prestamoOptional == null){
@@ -136,8 +168,12 @@ public class PrestamoServiceImpl implements PrestamoService {
         }
         try{
             PrestamoResponse prestamoMappeado = PrestamoMapper.prestamoEntiyToPrestamosResponse(prestamoOptional);
-            prestamoMappeado.setNombresEmpleado("Falta traer los nombres del empleado");
-            prestamoMappeado.setNombresCliente("Falta traer los nombres del cliente");
+            try {
+                prestamoMappeado.setNombresEmpleado(nombresEmpleado(prestamoOptional.getEmpleadoId()).getData().getNombres());
+                prestamoMappeado.setNombresCliente(nombresCliente(prestamoOptional.getClienteId()).getData().getNombres());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return ApiResponse.<PrestamoResponse>builder()
             .message("Prestamo encontrado correctamente")
             .data(prestamoMappeado)
@@ -154,7 +190,6 @@ public class PrestamoServiceImpl implements PrestamoService {
     }
 
     @Override
-    @Transactional
     public ApiResponse<PrestamoResponse> crearPrestamo(PrestamoCrearDto prestamo) {
 
         //Validar el monto maximo al que puede acceder el cliente
@@ -175,6 +210,7 @@ public class PrestamoServiceImpl implements PrestamoService {
             prestamoEntity.setEstado(Estado.PENDIENTE);
             prestamoEntity.setEmpleadoId(prestamo.getEmpleadoId());
             prestamoEntity.setClienteId(prestamo.getClienteId());
+            prestamoEntity.setFechaAprobacion(LocalDateTime.now());
             prestamoEntity.setTazaInteres(8);
             PrestamoEntity prestamoGuardado = _prestamoRepository.save(prestamoEntity) ;
             
@@ -188,18 +224,14 @@ public class PrestamoServiceImpl implements PrestamoService {
             //Comprobar si hubo algun error al crear las coutas
             var pagoCreado = _pagoService.crearPago(crearCoutas);
             if(pagoCreado.isStatus() == false){
-                return ApiResponse.<PrestamoResponse>builder()
-                .message(pagoCreado.getMessage())
-                .data(null)
-                .status(false)
-                .build();
+                throw new Exception(pagoCreado.getMessage());
             }
 
             //Si todo esta bien retornar la respuesta exitosa
             return ApiResponse.<PrestamoResponse>builder()
             .message("Prestamo aprobado correctamente")
             .data(PrestamoMapper.prestamoEntiyToPrestamosResponse(prestamoGuardado))
-            .status(false)
+            .status(true)
             .build();
 
         } catch (Exception e) {
@@ -235,6 +267,24 @@ public class PrestamoServiceImpl implements PrestamoService {
         return montoCalculado.setScale(3, RoundingMode.HALF_UP);
     }
 
-    
+    private ApiResponse<ClienteSimpleResponse> nombresCliente(int id) throws Exception{
+        ApiResponse<ClienteSimpleResponse> respuesta = _clienteClient.mostrarNombreClientePorId(Long.valueOf(id));
+        if(!respuesta.isStatus()) throw new Exception(respuesta.getMessage());
+        return ApiResponse.<ClienteSimpleResponse>builder()
+            .message(respuesta.getMessage())
+            .data(respuesta.getData())
+            .status(true)
+            .build();
+    }
+
+    private ApiResponse<EmpleadoSimpleResponse> nombresEmpleado(int id) throws Exception{
+        ApiResponse<EmpleadoSimpleResponse> respuesta = _empleadoClient.mostrarNombreEmpleadoPorId(Long.valueOf(id));
+        if(!respuesta.isStatus()) throw new Exception(respuesta.getMessage());
+        return ApiResponse.<EmpleadoSimpleResponse>builder()
+            .message(respuesta.getMessage())
+            .data(respuesta.getData())
+            .status(true)
+            .build();
+    }
 
 }

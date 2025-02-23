@@ -1,0 +1,9 @@
+<div class="contendor-detalle-cuota">
+  <div class="detalle-cuota" *ngIf="pago != undefined">
+    <p class="monto">Monto: {{pago.montoPagado}}</p>
+    <p class="fecha-realizada">Fecha Pagada: {{pago.fechaPagoRealizada}}</p>
+    <p class="fecha-estimada">Fecha Estimada: {{pago.fechaPagoEstimada}}</p>
+    <p class="estado">Estado: {{pago.estado}}</p>
+    <p class="nombre-empleado">Nombre Empleado: {{pago.nombreEmpleado}}</p>
+  </div>
+</div>

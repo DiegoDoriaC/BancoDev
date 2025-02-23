@@ -1,0 +1,46 @@
+.contenedor-formulario{
+  width: 500px;
+  margin: 300px auto 0;
+}
+
+.contenedor-dni > label {
+  display: block;
+  font-size: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.contenedor-dni > input {
+  width: 500px;
+  height: 40px;
+  font-size: 26px;
+  margin-bottom: 15px;
+  letter-spacing: 6px;
+  font-weight: bolder;
+  text-align: center;
+  appearance: textfield;
+  -webkit-appearance: none;
+}
+
+button[type="submit"]{
+  background-color: rgb(34, 139, 34);
+  padding: 8px 13px;
+  margin: 10px 0px;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+button[type="reset"] {
+  float: right;
+  background-color: #c91212;
+  padding: 8px 13px;
+  margin: 10px 0px;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

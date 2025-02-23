@@ -1,0 +1,18 @@
+.contenedor-item-transaccion{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  background-color: rgb(223, 223, 223);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+}
+
+.enlace{
+  text-decoration: none;
+  color: black;
+}
+
+.contenedor-item-transaccion:hover{
+  background-color: rgb(146, 146, 146);
+}

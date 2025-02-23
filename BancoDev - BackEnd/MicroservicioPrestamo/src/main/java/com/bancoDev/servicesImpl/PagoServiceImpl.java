@@ -12,10 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bancoDev.DTOs.ApiResponse;
 import com.bancoDev.DTOs.request.PagoCrearRequest;
 import com.bancoDev.DTOs.request.PagoRealizarRequest;
+import com.bancoDev.DTOs.request.RealizarPagoTransaccionRequest;
 import com.bancoDev.DTOs.response.PagoResponse;
+import com.bancoDev.client.interfaces.CuentaClient;
+import com.bancoDev.client.interfaces.EmpleadoClient;
+import com.bancoDev.client.models.CuentaResponse;
+import com.bancoDev.client.models.EmpleadoSimpleResponse;
 import com.bancoDev.models.PagoEntity;
 import com.bancoDev.models.PrestamoEntity;
 import com.bancoDev.models.enums.EstadoPago;
+import com.bancoDev.models.enums.TipoPago;
 import com.bancoDev.repositories.PagoRepository;
 import com.bancoDev.services.PagoService;
 import com.bancoDev.utils.mapper.PagoMapper;
@@ -27,10 +33,12 @@ import lombok.RequiredArgsConstructor;
 public class PagoServiceImpl implements PagoService {
 
     private final PagoRepository _pagoRepository;
+    private final CuentaClient _cuentaClient;
+    private final EmpleadoClient _empleadoClient;
 
     @Override
     public ApiResponse<List<PagoResponse>> listarTodosLosPagos(Long idPrestamo) {
-        List<PagoEntity> listadoDePagos = _pagoRepository.findAll();
+        List<PagoEntity> listadoDePagos = _pagoRepository.findByPrestamoId_Id(idPrestamo);
         if(listadoDePagos.isEmpty()){
             return ApiResponse.<List<PagoResponse>>builder()
             .message("Ningun pago encontrado")
@@ -53,7 +61,7 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     public ApiResponse<List<PagoResponse>> listarPagosPagados(Long idPrestamo) {
-        List<PagoEntity> pagosPagados = _pagoRepository.findByEstadoAndPrestamoId_Id("PAGADO", idPrestamo);
+        List<PagoEntity> pagosPagados = _pagoRepository.findByEstadoAndPrestamoId_Id(EstadoPago.PAGADO, idPrestamo);
         if(pagosPagados.isEmpty()){
             return ApiResponse.<List<PagoResponse>>builder()
             .message("Ninguna cuota pagada encontrada")
@@ -76,7 +84,7 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     public ApiResponse<List<PagoResponse>> listarPagosPendiendes(Long idPrestamo) {
-        List<PagoEntity> pagosPendientes = _pagoRepository.findByEstadoAndPrestamoId_Id("PENDIENTE", idPrestamo);
+        List<PagoEntity> pagosPendientes = _pagoRepository.findByEstadoAndPrestamoId_Id(EstadoPago.PENDIENTE, idPrestamo);
         if(pagosPendientes.isEmpty()){
             return ApiResponse.<List<PagoResponse>>builder()
             .message("Ninguna cuota pendiente encontrada")
@@ -108,7 +116,14 @@ public class PagoServiceImpl implements PagoService {
             .build();
         }
         PagoResponse pagoResponse = PagoMapper.pagoEntityToPagoResponse(pagoOptional.get());
-        pagoResponse.setNombreEmpleado("Falta implementar nombres");
+        pagoResponse.setNombreEmpleado("");
+        if(pagoOptional.get().getEstado().equals("PAGADO") || pagoOptional.get().getEstado().equals("ATRASADO"))
+            try {
+                pagoResponse.setNombreEmpleado(nombresEmpleado(pagoOptional.get().getEmpleadoId()).getData().getNombres());
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         return ApiResponse.<PagoResponse>builder()
         .message("Pago encontrado correctamente")
         .data(pagoResponse)
@@ -132,7 +147,7 @@ public class PagoServiceImpl implements PagoService {
         pagoMappeado.setMontoPago(pagoRealizar.getMontoPagado());
         pagoMappeado.setEstado(EstadoPago.PAGADO);        
         if(pagoMappeado.getFechaPagoEstimada().isBefore(LocalDate.now())) pagoMappeado.setEstado(EstadoPago.ATRASADO);
-        pagoMappeado.setTipoPago(pagoRealizar.getTipoPago());
+        pagoMappeado.setTipoPago(TipoPago.VENTANILLA);
         pagoMappeado.setEmpleadoId(pagoRealizar.getEmpleadoId());
         try{
             PagoEntity pagoRealizado = _pagoRepository.save(pagoMappeado);
@@ -153,6 +168,50 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     @Transactional
+    public ApiResponse<PagoResponse> realizarPagoTransaccion(RealizarPagoTransaccionRequest pagoRealizar) {
+        Optional<PagoEntity> pagoOptional = _pagoRepository.findById(Long.valueOf(pagoRealizar.getPagoId()));
+        if(!pagoOptional.isPresent()){
+            return ApiResponse.<PagoResponse>builder()
+            .message("El pago a realizar no fue encontrado")
+            .data(null)
+            .status(false)
+            .build();
+        }
+        PagoEntity pagoMappeado = pagoOptional.get();
+        pagoMappeado.setFechaPagoRealizada(LocalDateTime.now());
+        pagoMappeado.setMontoPago(pagoRealizar.getMontoPagado());
+        pagoMappeado.setEstado(EstadoPago.PAGADO);        
+        if(pagoMappeado.getFechaPagoEstimada().isBefore(LocalDate.now())) pagoMappeado.setEstado(EstadoPago.ATRASADO);
+        pagoMappeado.setTipoPago(TipoPago.TRANSFERENCIA);
+        pagoMappeado.setEmpleadoId(0);
+        try{
+            // Guardar el pago            
+            PagoEntity pagoRealizado = _pagoRepository.save(pagoMappeado);
+            // Disminuir el dinero de la cuenta quien realizo el pago
+            ApiResponse<CuentaResponse> respuestaPago = _cuentaClient.disminuirCuenta(String.valueOf(pagoRealizado.getPrestamoId().getClienteId()), pagoRealizado.getMontoPago());
+            if(!respuestaPago.isStatus()){
+                return ApiResponse.<PagoResponse>builder()
+                .message(respuestaPago.getMessage())
+                .data(null)
+                .status(false)
+                .build();
+            }
+            return ApiResponse.<PagoResponse>builder()
+            .message("Pago realizado correctamente")
+            .data(PagoMapper.pagoEntityToPagoResponse(pagoRealizado))
+            .status(true)
+            .build();
+        }
+        catch(Exception e){
+            return ApiResponse.<PagoResponse>builder()
+            .message("No se pudo realizar el pago: " + e.getMessage())
+            .data(null)
+            .status(false)
+            .build();
+        }
+    }
+
+    @Override
     public ApiResponse<List<PagoResponse>> crearPago(PagoCrearRequest pagoCrear) {
         try{
             List<PagoResponse> listadoPrestamos = new ArrayList<>();
@@ -160,7 +219,7 @@ public class PagoServiceImpl implements PagoService {
             prestamoEntity.setId(Long.valueOf(pagoCrear.getPrestamoId()));
             for(int i = 0; i < pagoCrear.getNumeroCoutas(); i++) {
                 PagoEntity pagoEntity = PagoEntity.builder()
-                .fechaPagoEstimada(LocalDate.now().plusMonths(i))
+                .fechaPagoEstimada(LocalDate.now().plusMonths(i+1))
                 .fechaPagoRealizada(null)
                 .montoPago(pagoCrear.getMontoPago())
                 .estado(EstadoPago.PENDIENTE)
@@ -183,7 +242,16 @@ public class PagoServiceImpl implements PagoService {
             .status(false)
             .build();
         }
+    }
 
+    private ApiResponse<EmpleadoSimpleResponse> nombresEmpleado(int id) throws Exception{
+        ApiResponse<EmpleadoSimpleResponse> respuesta = _empleadoClient.mostrarNombreEmpleadoPorId(Long.valueOf(id));
+        if(!respuesta.isStatus()) throw new Exception(respuesta.getMessage());
+        return ApiResponse.<EmpleadoSimpleResponse>builder()
+            .message(respuesta.getMessage())
+            .data(respuesta.getData())
+            .status(true)
+            .build();
     }
 
 }
