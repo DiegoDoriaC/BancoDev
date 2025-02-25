@@ -1,0 +1,48 @@
+		COMO EJECUTAR LA APLICACION
+
+1. Crear las siguientes bases de datos (configurar las cadenas de conexion)
+
+	MySQL:
+	create database microservicio_cliente;
+	create database microservicio_empleado;
+
+	SqlServer:
+	create database microservicio_prestamo;
+
+	MongoDB - crear la base de datos "microservicio_cuentas" con las
+		 siguientes colecciones(tablas):
+			- tbl_cuentas-bancarias
+			- tbl_transacciones
+	
+2. Levantar las aplicaciones del back-end en el siguiente orden
+
+	1 - MicroservicioEureka
+	2 - MicroservicioCliente
+	3 - MicroservicioEmpleado
+	4 - MicroservicioMensajeria
+	5 - MicroservicioCuentas
+	6 - MicroservicioPrestamo
+	7 - MicroservicioAuth
+	8 - ApiGateway
+
+3. Ejecutar el siguiente script en la base de datos "microservicio_cliente" que
+   esta en MySql, en la tabla "tbl_empleado"
+
+	INSERT INTO `microservicio_empleado`.`tbl_empleado` (`apellido`, `correo`, `foto`, `nombre`, `password`, `rol`, `id_sucursal`) VALUES ('García', 'juan@example.com', 'https://img.freepik.com/fotos-premium/hombre-traje-corbata-esta-posando-foto-ia-generativa_97167-21057.jpg', 'Juan', 'f6ccb3e8d609012238c0b39e60b2c9632b3cdede91e035dad1de43469768f4cc', 'ANALISTA', '1');
+	INSERT INTO `microservicio_empleado`.`tbl_empleado` (`apellido`, `correo`, `foto`, `nombre`, `password`, `rol`, `id_sucursal`) VALUES ('Fernández', 'maria@example.com', 'https://img.freepik.com/fotos-premium/persona-traje_777078-56281.jpg', 'María', '626e3c805e77eeb472c42c6be607be2af7ac5c08fd7050f278e0330fe81abf57', 'CAJERO', '1');
+
+4. Ejecutar el angular con "npm install" y despues "npm start" (ambos en la consola del vscode)
+
+
+		CUENTAS PARA LOGUEARSE
+	Analista: 
+		correo:    juan@example.com
+		password:  juan123
+
+	Cajero: 
+		correo:	   maria@example.com
+		password:  maria123
+
+	Usuario: 
+		Te creas una cuenta con un correo electronico valido (importante!)
+	

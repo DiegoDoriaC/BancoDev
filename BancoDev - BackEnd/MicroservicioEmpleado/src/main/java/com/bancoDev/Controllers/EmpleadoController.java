@@ -27,21 +27,18 @@ public class EmpleadoController {
     @GetMapping("listarPorSucursalId/{idSucursal}")
     public ResponseEntity<ApiResponse<List<EmpleadoResponse>>> listarEmpleadoPorIdSucursal(@PathVariable Long idSucursal){
         ApiResponse<List<EmpleadoResponse>> respuesta = _empleadoService.listarEmpleadoPorIdSucursal(idSucursal);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("buscarPorId/{id}")
     public ResponseEntity<ApiResponse<EmpleadoResponse>> buscarPorId(@PathVariable Long id) {
         ApiResponse<EmpleadoResponse> respuesta = _empleadoService.buscarPorId(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("buscarNombresPorId/{id}")
     public ResponseEntity<ApiResponse<EmpleadoSimpleResponse>> mostrarNombreEmpleadoPorId(@PathVariable Long id) {
         ApiResponse<EmpleadoSimpleResponse> respuesta = _empleadoService.mostrarNombreEmpleadoPorId(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

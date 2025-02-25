@@ -33,28 +33,24 @@ public class ClienteController {
     @GetMapping("/listar")
     public ResponseEntity<ApiResponse<List<ClienteResponse>>> listarClientesActivos(){
         ApiResponse<List<ClienteResponse>> respuesta = _clienteService.listarClientesActivos();
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("/buscarPorId/{id}")
     public ResponseEntity<ApiResponse<ClienteResponse>> buscarClientePorId(@PathVariable Long id){
         ApiResponse<ClienteResponse> respuesta = _clienteService.buscarClientePorId(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
     
     @GetMapping("/buscarPorDni/{dni}")
     public ResponseEntity<ApiResponse<ClienteResponse>> buscarPorDni(@PathVariable String dni){
         ApiResponse<ClienteResponse> respuesta = _clienteService.buscarPorDni(dni);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("/buscarNombresPorId/{id}")
     public ResponseEntity<ApiResponse<ClienteSimpleResponse>> mostrarNombreClientePorId(@PathVariable Long id){
         ApiResponse<ClienteSimpleResponse> respuesta = _clienteService.mostrarNombreClientePorId(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
@@ -73,21 +69,13 @@ public class ClienteController {
     @PutMapping("/actualizar")
     public ResponseEntity<ApiResponse<ClienteResponse>> actualizarCliente(@RequestBody ClienteEntity cliente){
         ApiResponse<ClienteResponse> respuesta = _clienteService.actualizarCliente(cliente);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<ApiResponse<ClienteResponse>> eliminarCliente(@PathVariable Long id){
         ApiResponse<ClienteResponse> respuesta = _clienteService.eliminarCliente(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-    }
-
-
-
-
-
-    
+    } 
     
 }

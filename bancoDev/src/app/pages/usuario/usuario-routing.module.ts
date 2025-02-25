@@ -7,6 +7,7 @@ import { DetalleCuotaComponent } from "./detalle-cuota/detalle-cuota.component";
 import { UsuarioComponent } from "./usuario.component";
 import { ListaTransaccionComponent } from "./lista-transaccion/lista-transaccion.component";
 import { ListaCuotaComponent } from "./lista-cuota/lista-cuota.component";
+import { RealizarTransaccionComponent } from "./realizar-transaccion/realizar-transaccion.component";
 
 const route: Routes = [
   { path:'', component:UsuarioComponent, children:[
@@ -16,6 +17,7 @@ const route: Routes = [
     { path:'prestamos', component:PrestamosComponent },
     { path:'listaCuota/:numeroPrestamo', component:ListaCuotaComponent },
     { path:'detalleCuota/:numeroCuota', component:DetalleCuotaComponent },
+    { path:'realizarTransaccion', component:RealizarTransaccionComponent },
   ]},
 ];
 

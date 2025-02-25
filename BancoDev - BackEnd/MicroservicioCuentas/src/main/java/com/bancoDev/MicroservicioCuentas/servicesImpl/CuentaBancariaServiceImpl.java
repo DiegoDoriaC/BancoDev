@@ -30,7 +30,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
         CuentaBancariaEntity cuentaEncontrada = _cuentaRepository.findByClienteId(idCliente);
         if(cuentaEncontrada == null){
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("La cuenta bancaria no fue encontrada")
+            .message("La cuenta bancaria no fue encontrada")
             .data(null)
             .status(false)
             .build();
@@ -40,7 +40,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
         .montoDinero(cuentaEncontrada.getMontoDinero())
         .build();
         return ApiResponse.<CuentaResponse>builder()
-        .menssage("Cuenta bancaria encontrada correctamente")
+        .message("Cuenta bancaria encontrada correctamente")
         .data(cuentaMappeada)
         .status(true)
         .build();
@@ -52,7 +52,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
         CuentaBancariaEntity cuentaOptional = _cuentaRepository.findById(idCuenta).orElse(null);
         if(cuentaOptional == null) {
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("No se pudo encontrar la cuenta a recargar dinero")
+            .message("No se pudo encontrar la cuenta a recargar dinero")
             .data(null)
             .status(false)
             .build();
@@ -65,14 +65,14 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
             .montoDinero(cuentaActualizada.getMontoDinero())
             .build();
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("Dinero agregado correctamente")
+            .message("Dinero agregado correctamente")
             .data(cuentaMappeada)
             .status(true)
             .build();
         }
         catch(Exception e){
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("No se pudo agregar el dinero, error: " + e.getMessage())
+            .message("No se pudo agregar el dinero, error: " + e.getMessage())
             .data(null)
             .status(false)
             .build();
@@ -85,7 +85,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
         CuentaBancariaEntity cuentaOptional = _cuentaRepository.findById(idCuenta).orElse(null);
         if(cuentaOptional == null) {
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("No se pudo encontrar la cuenta a descontar el dinero")
+            .message("No se pudo encontrar la cuenta a descontar el dinero")
             .data(null)
             .status(false)
             .build();
@@ -93,7 +93,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
         try{
             if(cuentaOptional.getMontoDinero().compareTo(montoDinero) == -1){
                 return ApiResponse.<CuentaResponse>builder()
-                .menssage("No cuenta con suficiente dinero para realizar el pago")
+                .message("No cuenta con suficiente dinero para realizar el pago")
                 .data(null)
                 .status(false)
                 .build();
@@ -105,14 +105,14 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
             .montoDinero(cuentaActualizada.getMontoDinero())
             .build();
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("Dinero descontado correctamente")
+            .message("Dinero descontado correctamente")
             .data(cuentaMappeada)
             .status(true)
             .build();
         }
         catch(Exception e){
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("No se pudo descontar el dinero, error: " + e.getMessage())
+            .message("No se pudo descontar el dinero, error: " + e.getMessage())
             .data(null)
             .status(false)
             .build();
@@ -133,14 +133,14 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
             .montoDinero(cuentaCreada.getMontoDinero())
             .build();
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("Cuenta creada correctamente")
+            .message("Cuenta creada correctamente")
             .data(cuentaMappeada)
             .status(true)
             .build(); 
         }
         catch(Exception e){
             return ApiResponse.<CuentaResponse>builder()
-            .menssage("No se pudo crear la cuenta, error: " + e.getMessage())
+            .message("No se pudo crear la cuenta, error: " + e.getMessage())
             .data(null)
             .status(false)
             .build(); 
@@ -156,7 +156,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
             var disminuirCuentaResponse = disminuirCuenta(cuentaCliente.getData().getNumeroCuenta(), transferir.getMonto());
             if(disminuirCuentaResponse.isStatus() == false){
                 return ApiResponse.<TransferenciaResponse>builder()
-                .menssage(disminuirCuentaResponse.getMenssage())
+                .message(disminuirCuentaResponse.getMessage())
                 .data(null)
                 .status(false)
                 .build();
@@ -164,7 +164,7 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
             var recargarCuentaResponse = recargarCuenta(transferir.getCuentaDestino(), transferir.getMonto());
             if(recargarCuentaResponse.isStatus() == false){
                 return ApiResponse.<TransferenciaResponse>builder()
-                .menssage(recargarCuentaResponse.getMenssage())
+                .message(recargarCuentaResponse.getMessage())
                 .data(null)
                 .status(false)
                 .build();
@@ -182,20 +182,20 @@ public class CuentaBancariaServiceImpl implements CuentaBancariaService {
             boolean respuestaTransaccion = _transaccionRepository.guardarTransaccion(transaccionRequest, Operacion.TRANSACCION);
             if(respuestaTransaccion == false){
                 return ApiResponse.<TransferenciaResponse>builder()
-                .menssage("No se pudo transferir el dinero")
+                .message("No se pudo transferir el dinero")
                 .data(null)
                 .status(false)
                 .build();
             }
             return ApiResponse.<TransferenciaResponse>builder()
-            .menssage("Dinero transferido correctamente")
+            .message("Dinero transferido correctamente")
             .data(transferenciaMappeado)
             .status(true)
             .build();
         }
         catch(Exception e){
             return ApiResponse.<TransferenciaResponse>builder()
-                .menssage("No se pudo transferir el dinero, error: " + e.getMessage())
+                .message("No se pudo transferir el dinero, error: " + e.getMessage())
                 .data(null)
                 .status(false)
                 .build();

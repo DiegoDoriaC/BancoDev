@@ -1,0 +1,72 @@
+.contenedor-transferir{
+  width: 500px;
+  margin: 100px auto;
+  h1{
+    font-size: 40px;
+    text-align: center;
+  }
+  input{
+    width: 500px;
+    height: 40px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+  }
+}
+
+button[type="submit"] {
+  background-color: rgb(34, 139, 34);
+  padding: 8px 13px;
+  margin: 10px 0px;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #57A639;
+}
+
+button[type="reset"] {
+  float: right;
+  background-color: #FFA420;
+  padding: 8px 13px;
+  margin: 10px 0px;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+button[type="reset"]:hover {
+  background-color: #FF7514;
+}
+
+.contenedor-mensaje{
+  font-size: 30px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.success{
+  font-size: 30px;
+  text-align: center;
+  margin-top: 40px;
+  color: rgb(5, 151, 25);
+  font-weight: bolder;
+}
+
+.error{
+  font-size: 30px;
+  text-align: center;
+  margin-top: 40px;
+  color: rgb(206, 6, 6);
+  font-weight: bolder;
+
+}
+
+
+

@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ApiResponse<T> {
 
-    private String menssage;
+    private String message;
     private T data;
     private boolean status;
 

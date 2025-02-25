@@ -23,7 +23,6 @@ public class HistorialController {
     @GetMapping("/buscarPorIdCliente/{id}")
     public ResponseEntity<ApiResponse<HistorialResponse>> buscarHistorialPorIdCliente(@PathVariable Long id){
         ApiResponse<HistorialResponse> respuesta = _historialService.buscarHistorialPorIdCliente(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

@@ -29,7 +29,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         List<TransaccionEntity> listadoTransaccion = _transaccionRepository.findAll();
         if(listadoTransaccion.isEmpty()){
             return ApiResponse.<List<TransaccionSimpleResponse>>builder()
-            .menssage("Ninguna Transaccion encontrada")
+            .message("Ninguna Transaccion encontrada")
             .data(null)
             .status(false)
             .build();
@@ -42,7 +42,7 @@ public class TransaccionServiceImpl implements TransaccionService {
             .build();
         }).toList();
         return ApiResponse.<List<TransaccionSimpleResponse>>builder()
-        .menssage("Transacciones encontradas correctamente")
+        .message("Transacciones encontradas correctamente")
         .data(listadoMapeado)
         .status(true)
         .build();
@@ -53,7 +53,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         TransaccionEntity transaccionEncontrada = _transaccionRepository.findByNumeroTransaccion(id);
         if(transaccionEncontrada == null){
             return ApiResponse.<TransaccionCompletaResponse>builder()
-            .menssage("La transaccion no fue encontrada")
+            .message("La transaccion no fue encontrada")
             .data(null)
             .status(false)
             .build();
@@ -66,7 +66,7 @@ public class TransaccionServiceImpl implements TransaccionService {
         .numeroCuentaDestino(transaccionEncontrada.getNumeroCuentaDestino())
         .build();
         return ApiResponse.<TransaccionCompletaResponse>builder()
-        .menssage("Transaccion encontrada correctamente")
+        .message("Transaccion encontrada correctamente")
         .data(transaccionMappeado)
         .status(true)
         .build();

@@ -9,6 +9,8 @@ import { UsuarioRoutingModule } from './usuario-routing.module';
 import { UsuarioComponent } from './usuario.component';
 import { ListaTransaccionComponent } from './lista-transaccion/lista-transaccion.component';
 import { ListaCuotaComponent } from './lista-cuota/lista-cuota.component';
+import { RealizarTransaccionComponent } from './realizar-transaccion/realizar-transaccion.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,12 +22,14 @@ import { ListaCuotaComponent } from './lista-cuota/lista-cuota.component';
     DetalleCuotaComponent,
     DetalleTransaccionComponent,
     ListaTransaccionComponent,
-    ListaCuotaComponent
+    ListaCuotaComponent,
+    RealizarTransaccionComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     UsuarioRoutingModule,
+    ReactiveFormsModule,
   ]
 })
 export class UsuarioModule { }

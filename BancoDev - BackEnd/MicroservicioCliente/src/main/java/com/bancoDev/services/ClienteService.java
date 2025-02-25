@@ -18,5 +18,6 @@ public interface ClienteService {
     ApiResponse<ClienteResponse> crearCliente(ClienteCrearRequest cliente);
     ApiResponse<ClienteResponse> actualizarCliente(ClienteEntity cliente);
     ApiResponse<ClienteResponse> eliminarCliente(Long id);
+    
 
 }

@@ -1,5 +1,9 @@
 <div class="contenedor-prestamos"  *ngIf="listadoPrestamos.length > 0; else noData" >
-  <div [routerLink]="['/usuario/listaCuota', item.id]" class="prestamo" *ngFor="let item of listadoPrestamos">
+  <div [ngClass]="{
+    'prestamoPagado':item.estado == 'PAGADO',
+    'prestamoAtrasado':item.estado == 'ATRASADO',
+    'prestamoPendiente':item.estado == 'PENDIENTE',
+    }" [routerLink]="['/usuario/listaCuota', item.id]" class="prestamo" *ngFor="let item of listadoPrestamos">
     <p>Monto Prestamo: {{ item.monto}}</p>
     <p>Plazo meses: {{ item.plazoMeses }}</p>
     <p>Fecha aprobacion: {{ item.fechaAprobacion }}</p>   <!-- aprobado -->

@@ -29,42 +29,36 @@ public class PagoController {
     @GetMapping("/listarTodosLosPagos/{idPrestamo}")
     public ResponseEntity<ApiResponse<List<PagoResponse>>> listarTodosLosPagos(@PathVariable Long idPrestamo){
         ApiResponse<List<PagoResponse>> respuesta = _pagoService.listarTodosLosPagos(idPrestamo);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("/listarPagosPagados/{idPrestamo}")
     public ResponseEntity<ApiResponse<List<PagoResponse>>> listarPagosPagados(@PathVariable Long idPrestamo){
         ApiResponse<List<PagoResponse>> respuesta = _pagoService.listarPagosPagados(idPrestamo);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("/listarPagosPendiendes/{idPrestamo}")
     public ResponseEntity<ApiResponse<List<PagoResponse>>> listarPagosPendiendes(@PathVariable Long idPrestamo){
         ApiResponse<List<PagoResponse>> respuesta = _pagoService.listarPagosPendiendes(idPrestamo);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @GetMapping("/buscarPago/{id}")
     public ResponseEntity<ApiResponse<PagoResponse>> buscarPago(@PathVariable Long id){
         ApiResponse<PagoResponse> respuesta = _pagoService.buscarPago(id);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @PutMapping("/realizarPago")
     public ResponseEntity<ApiResponse<PagoResponse>> realizarPago(@RequestBody PagoRealizarRequest pagoRealizar){
         ApiResponse<PagoResponse> respuesta = _pagoService.realizarPago(pagoRealizar);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @PutMapping("/realizarPagoTransaccion")
     public ResponseEntity<ApiResponse<PagoResponse>> realizarPagoTransaccion(@RequestBody RealizarPagoTransaccionRequest pagoRealizar){
         ApiResponse<PagoResponse> respuesta = _pagoService.realizarPagoTransaccion(pagoRealizar);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

@@ -24,7 +24,6 @@ public class SucursalController {
     @GetMapping("/listar")
     public ResponseEntity<ApiResponse<List<SucursalEntity>>> listadoSucursales(){
         ApiResponse<List<SucursalEntity>> response = _sucursalService.listadoSucursales();
-        if(response.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

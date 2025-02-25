@@ -31,28 +31,24 @@ public class CuentaBancariaController {
     @GetMapping("/detalle/{idCliente}")
     public ResponseEntity<ApiResponse<CuentaResponse>> verEstadoCuenta(@PathVariable int idCliente){
         ApiResponse<CuentaResponse> respuesta = _cuentaService.verEstadoCuenta(idCliente);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @PutMapping("/transferirDinero")
     public ResponseEntity<ApiResponse<TransferenciaResponse>> transferirDinero(@RequestBody TransferirDineroRequest transferir){
         ApiResponse<TransferenciaResponse> respuesta = _cuentaService.transferirDinero(transferir);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @PutMapping("/disminuirCuenta")
     public ResponseEntity<ApiResponse<CuentaResponse>> disminuirCuenta(@RequestParam String idCuenta,@RequestParam BigDecimal montoDinero){
         ApiResponse<CuentaResponse> respuesta = _cuentaService.disminuirCuenta(idCuenta, montoDinero);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 
     @PostMapping("/crear/{idCliente}")
     public ResponseEntity<ApiResponse<CuentaResponse>> crearCuenta(@PathVariable int idCliente){
         ApiResponse<CuentaResponse> respuesta = _cuentaService.crearCuenta(idCliente);
-        if(respuesta.isStatus() == false) return ResponseEntity.status(HttpStatus.OK).body(respuesta);
         return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 

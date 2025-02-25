@@ -1,8 +1,9 @@
+
 .prestamoPagado{
   width: 600px;
   padding: 6px 34px;
   border-radius: 10px;
-  background-color: rgb(12, 151, 35);
+  border: 2px solid rgb(12, 151, 35);
   margin-top: 40px;
   margin-left: 40px;
   font-size: 23px;
@@ -10,14 +11,14 @@
 }
 
 .prestamoPagado:hover{
-  background-color: rgb(8, 109, 25);
+  border: 2px solid rgb(12, 151, 35);
 }
 
 .prestamoAtrasado{
   width: 600px;
   padding: 6px 34px;
   border-radius: 10px;
-  background-color: rgb(179, 168, 23);
+  border: 2px solid rgb(179, 168, 23);
   margin-top: 40px;
   margin-left: 40px;
   font-size: 23px;
@@ -25,14 +26,14 @@
 }
 
 .prestamoAtrasado:hover{
-  background-color: rgb(124, 117, 16);
+  border: 2px solid rgb(124, 117, 16);
 }
 
 .prestamoPendiente{
   width: 600px;
   padding: 6px 34px;
   border-radius: 10px;
-  background-color: rgb(141, 16, 16);
+  border: 2px solid rgb(141, 16, 16);
   margin-top: 40px;
   margin-left: 40px;
   font-size: 23px;
@@ -40,5 +41,5 @@
 }
 
 .prestamoPendiente:hover{
-  background-color: rgb(92, 11, 11);
+  border: 2px solid rgb(92, 11, 11);
 }
