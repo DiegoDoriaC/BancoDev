@@ -1,0 +1,65 @@
+<div class="contenedor-solicitar-prestamo-empleados" *ngIf="!paso2"> 
+
+    <div class="contenedor-empleados">
+        <h1>Escoje un analista</h1>
+        <div style="display: flex; gap: 1rem;">
+            <figure *ngFor="let item of listaEmpleado">
+                <img 
+                [src]="item.foto"
+                alt="imagen"
+                (click)="seleccionarImagen(item.id)"
+                [class.seleccionada]="item.id === imagenSeleccionada"
+                class="imagen-empleado"
+                style="width: 240px; height: 280px; cursor: pointer; border: 2px solid transparent;" 
+                />
+                <figcaption class="figcaption">{{item.nombre + " " + item.apellido}}</figcaption>
+            </figure>            
+        </div>
+        
+        <button 
+            [ngClass]="{ 'activo': imagenSeleccionada, 'inactivo': !imagenSeleccionada }" 
+            (click)="enviarSeleccion()" 
+            [disabled]="!imagenSeleccionada">
+                Escojer
+        </button>
+    </div> 
+
+</div>
+
+
+<div class="contenedor-solicitar-prestamo">  
+    
+    <div class="contenedor-paso2" *ngIf="paso2">        
+        <h1>Ingrese los datos del prestamo a solicitar</h1>
+        <form [formGroup]="formularioSolicitarPrestamo" (ngSubmit)="onSubmit()">
+            <div>
+                <label for="">Monto Solicitado:</label>
+                <input formControlName="monto" type="number">
+            </div>
+            <div>
+                <label for="">Sueldo Cliente:</label>
+                <input class="input-sueldo" formControlName="sueldo" type="text">
+            </div>
+            <div>
+                <label for="">Plazo:</label>
+                <select formControlName="plazo" name="" id="">
+                    <option value="TRES">3 meses</option>
+                    <option value="SEIS">6 meses</option>
+                    <option value="DOCE">12 meses</option>
+                    <option value="TREINTA_Y_DOS">32 meses</option>
+                    <option value="SESENTA">60 meses</option>
+                </select>
+            </div>
+            
+            <ng-template [ngIf]="montoAproximadoPago != ''">
+                <h3>{{montoAproximadoPago}}</h3>
+            </ng-template>
+            
+            <div class="contenedor-botones">
+                <button type="button" (click)="volver()">Volver</button>
+                <button type="submit">Solicitar</button>
+            </div>        
+        </form>
+    </div>
+
+</div>

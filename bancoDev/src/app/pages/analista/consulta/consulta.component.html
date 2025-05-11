@@ -1,1 +1,17 @@
-<p>consulta works!</p>
+<div class="contenedor-aprobar" >
+
+    <div class="contenedor-prestamos" *ngIf="listadoPrestamos.length > 0; else noData">
+        <div (click)="aprobarPrestamo(item.id)" class="prestamo" *ngFor="let item of listadoPrestamos">
+            <p class="cliente">Cliente: {{ item.nombresCliente }}</p>
+            <p class="monto">Monto Prestamo: {{ item.monto }}</p>
+            <p class="plazo">Plazo Meses: {{ item.plazoMeses }}</p>
+            <p class="fecha">Fecha Solicitud: {{ item.fechaAprobacion }}</p>
+        </div>
+    </div>
+
+    <ng-template #noData>
+        <h4>{{ mensaje }}</h4>
+    </ng-template>
+
+
+</div>

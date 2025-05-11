@@ -27,8 +27,10 @@ export class ListaCuotaComponent implements OnInit {
   obtenerListadoDePagos(id:number){
     this._pago.listarTodosLosPagos(id).subscribe(data => {
       if(data.status){
+        console.log(data.data);
         this.listadoPagos = data.data
       }
+      console.log(data.data);
       this.mensaje = data.message
     })
   }

@@ -1,0 +1,20 @@
+.prestamo{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  background-color: rgb(223, 223, 223);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.prestamo:hover{
+  background-color: grey;
+}
+
+h4{
+  margin-top: 100px;
+  font-size: 30px;
+  text-align: center;
+}

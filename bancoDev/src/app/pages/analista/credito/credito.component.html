@@ -1,1 +1,38 @@
-<p>credito works!</p>
+<div class="contenedor-creditos" *ngIf="listadoPrestamos.length == 0; else data">
+    <div class="contenedor-formulario">
+        <form [formGroup]="formularioConsultar" (ngSubmit)="onSubmit()">
+            <div class="contenedor-dni">
+                <label for="">Ingrese DNI del cliente:</label>
+                <input type="number" formControlName="dni">    
+                <div class="error-dni" *ngIf="campoEsValido('dni')">                    
+                    <small *ngIf="formularioConsultar.get('dni')?.errors?.['required']">
+                        El DNI es obligatorio
+                    </small>   
+                    <small *ngIf="formularioConsultar.get('dni')?.errors?.['pattern']">
+                        El DNI debe tener exactamente 8 números
+                    </small>
+                </div>
+            </div>
+            <div class="contenedor-button">
+                <button>Consultar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ng-template #data>
+    <div class="contenedor-historial">
+        <div *ngIf="listadoPrestamos.length > 0;" >
+            <div [ngClass]="{
+                'prestamoPagado':item.estado == 'APROBADO',
+                'prestamoAtrasado':item.estado == 'PENDIENTE',
+                }" class="prestamo" *ngFor="let item of listadoPrestamos">
+                <p>Monto Prestamo: {{ item.monto}}</p>
+                <p>Plazo meses: {{ item.plazoMeses }}</p>
+                <p>Fecha aprobacion: {{ item.fechaAprobacion }}</p>   <!-- aprobado -->
+                <p>Estado: {{ item.estado }}</p>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

@@ -12,6 +12,9 @@ export class PrestamosComponent implements OnInit {
 
   public listadoPrestamos: PrestamoResponse[] = [];
   public mensaje: string = '';
+  public objeto: any;
+  solicitarPrestamo: boolean = false;
+  mostrarHistorial: boolean = false;
 
   constructor(
     private _utils: UtilsService,
@@ -19,9 +22,7 @@ export class PrestamosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const objeto = this._utils.recuperarObjetoDelLocalStorage('usuario');
-    console.log(objeto.id);
-    this.obtenerListadoDePrestamos(objeto.id);
+    this.objeto = this._utils.recuperarObjetoDelLocalStorage('usuario');    
   }
 
   obtenerListadoDePrestamos(id:number){
@@ -31,6 +32,17 @@ export class PrestamosComponent implements OnInit {
       }
       this.mensaje = data.message;
     })
+  }
+
+  activarSolicitudPrestamo(){
+    this.mostrarHistorial = false;
+    this.solicitarPrestamo = true;
+  }
+
+  activarMostrarHistorial(){
+    this.solicitarPrestamo = false;
+    this.obtenerListadoDePrestamos(this.objeto.id);
+    this.mostrarHistorial = true; 
   }
 
 }

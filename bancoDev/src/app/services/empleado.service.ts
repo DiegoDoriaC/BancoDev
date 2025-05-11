@@ -15,7 +15,7 @@ export class EmpleadoService {
   constructor( private http: HttpClient ) { }
 
   listarEmpleadoPorIdSucursal(idSucursal:number): Observable<ApiResponse<EmpleadoResponse[]>> {
-    return this.http.get<ApiResponse<EmpleadoResponse[]>>(`${this.api}/listarTransacciones/${idSucursal}`);
+    return this.http.get<ApiResponse<EmpleadoResponse[]>>(`${this.api}/listarPorSucursalId/${idSucursal}`);
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TransaccionSimpleResponse } from 'src/app/interfaces/cuenta/TransaccionSimpleResponse';
 import { TransaccionService } from 'src/app/services/transaccion.service';
+import localeEs from '@angular/common/locales/es';
 
 @Component({
   selector: 'app-lista-transaccion',
@@ -16,6 +17,7 @@ export class ListaTransaccionComponent implements OnInit {
     private route: ActivatedRoute,
     private _transaccion: TransaccionService,
   ) {}
+
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('numeroCuenta')!;

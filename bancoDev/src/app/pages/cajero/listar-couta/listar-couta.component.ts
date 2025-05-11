@@ -4,6 +4,7 @@ import { PagoResponse } from 'src/app/interfaces/prestamos/PagoResponse';
 import { PagoService } from 'src/app/services/pago.service';
 import { PagoRealizarRequest } from '../../../interfaces/prestamos/PagoRealizarRequest';
 import { UtilsService } from 'src/app/services/utils.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listar-couta',
@@ -36,22 +37,46 @@ export class ListarCoutaComponent implements OnInit {
     })
   }
 
-  registrarPagoDeCuota(idCuota: number, montoPago: number){
+  registrarPagoDeCuota(idCuota: number, montoPago: number){    
     const objeto = this._utils.recuperarObjetoDelLocalStorage('usuario');
     const pago: PagoRealizarRequest = {
       pagoId: idCuota,
       montoPagado: montoPago.toString(),
       empleadoId: objeto.id
     }
-    this._pago.realizarPago(pago).subscribe(data => {
-      if(data.status){
-        console.log(data.message);
-        this._router.navigate(['cajero'])
-      }
-      else{
-        this.mensaje = data.message
+
+    Swal.fire({
+      title: 'Esta Seguro?',
+      text: 'Esta seguro que desea realizar el pago de la cuota?',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      showConfirmButton: true,
+      confirmButtonText: 'Sí, pagar'
+    }).then((resultado) => {
+      if(resultado.isConfirmed){
+        this._pago.realizarPago(pago).subscribe(data => {
+          if(data.status){
+            Swal.fire({
+              title: 'Exito',
+              text: data.message,
+              icon: 'success'
+            }).then((resultado) => {
+              if(resultado.isConfirmed)
+                this._router.navigate(['cajero'])
+            })
+          }
+          else{
+             Swal.fire({
+              title: 'Exito',
+              text: data.message,
+              icon: 'success'
+            })
+          }
+        })
       }
     })
+
+    
   }
 
 }

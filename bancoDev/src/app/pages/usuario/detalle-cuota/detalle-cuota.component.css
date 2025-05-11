@@ -1,11 +1,10 @@
-.contendor-detalle-cuota{
-
-}
-
 .detalle-cuota{
   width: 500px;
   margin: 200px auto;
   font-size: 20px;
+  border: 2px dashed black;
+  padding: 10px 0 40px 180px;
+  transform: scale(1.2);
 }
 
 .monto{

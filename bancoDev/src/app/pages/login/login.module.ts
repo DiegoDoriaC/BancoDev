@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 import { LoginRoutingModule } from './login-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [
     LoginComponent,

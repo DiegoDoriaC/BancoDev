@@ -1,0 +1,135 @@
+.contenedor-creditos{
+    height: 100vh;
+    .contenedor-formulario{
+        width: 600px;
+        margin: 0 auto;
+        .contenedor-dni{
+            margin-top: 240px;
+            font-size: 23px; 
+            position: relative;
+            input{
+                margin-left: 20px;
+                padding: 5px 10px;
+                border: 1px solid black;
+                font-size: 23px; 
+                border-radius: 5px;
+            }   
+            .error-dni{
+                color: rgb(189, 2, 2);
+                position: absolute;
+                text-align: center;
+                small{
+                    margin-left: 250px;
+                }
+            }                    
+        }
+        .contenedor-button{
+            margin: 60px 0 0 195px;
+            width: 150px;
+            button{
+                font-size: 23px;
+                padding: 6px 50px;
+                letter-spacing: 2px;
+                border: 2px solid black;
+                background-color: #e97751;
+            }
+            button:hover{
+                background-color: #ED6436;
+                cursor: pointer;
+            }
+        }
+    }    
+}
+
+
+.prestamoPagado{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  border: 2px solid rgb(12, 151, 35);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+}
+
+.prestamoPagado:hover{
+  border: 2px solid rgb(12, 151, 35);
+}
+
+.prestamoAtrasado{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  border: 2px solid rgb(179, 168, 23);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+}
+
+.prestamoAtrasado:hover{
+  border: 2px solid rgb(124, 117, 16);
+}
+
+.prestamoPendiente{
+  width: 600px;
+  padding: 6px 34px;
+  border-radius: 10px;
+  border: 2px solid rgb(141, 16, 16);
+  margin-top: 40px;
+  margin-left: 40px;
+  font-size: 23px;
+}
+
+.prestamoPendiente:hover{
+  border: 2px solid rgb(92, 11, 11);
+}
+
+.pregunta-inicial{
+  margin: 170px 0 0 140px;
+  font-size: 30px;
+}
+
+
+
+.contenedor-prestamos{
+  display: flex;
+  width: 100%;
+  .contenedor-izquierda{
+    width: 100%;
+    width: 30%;
+    height: 100vh;
+    justify-content: center;
+    .contenedor-buttons{
+      margin-top: 130px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      button{
+        display: block;
+        width: 235px;
+        margin-top: 20px;
+        padding: 10px 0;
+        font-size: 19px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 1.5px;
+      }
+      .boton-historial{
+        background-color: rgb(15, 15, 235);
+        color: white;
+        border: 3px solid rgb(15, 15, 235);
+      }
+      .boton-solicitar{
+        color: rgb(15, 15, 235);
+        background-color: white;
+        border: 3px solid rgb(15, 15, 235);
+      }
+    }
+  }
+  .contenedor-derecha{
+    width: 70%;
+    height: 100vh;    
+  }
+}

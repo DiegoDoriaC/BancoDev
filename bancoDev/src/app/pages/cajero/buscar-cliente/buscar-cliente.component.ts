@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClienteResponse } from 'src/app/interfaces/cliente/ClienteResponse';
 import { ClienteService } from 'src/app/services/cliente.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-buscar-cliente',
@@ -15,7 +16,7 @@ export class BuscarClienteComponent implements OnInit {
   public mensaje: string = '' ;
 
   public formularioConsultarDni = new FormGroup({
-    dni: new FormControl('', Validators.required)
+    dni: new FormControl('', [Validators.required, Validators.pattern('^\d{8}$')])
   })
 
   constructor(
@@ -30,15 +31,21 @@ export class BuscarClienteComponent implements OnInit {
 
   onSubmit(){
     const dni = this.formularioConsultarDni.get('dni')?.value ?? '';
-    this.obtenerClientePorDni(dni);
+      this.obtenerClientePorDni(dni);
   }
 
   obtenerClientePorDni(dni: string){
     this._cliente.buscarPorDni(dni).subscribe(data => {
       if(data.status){
-        console.log(data.data);
         this.clienteEncontrado = data.data;
         this._router.navigate(['/cajero/listarPrestamo', data.data.id])
+      }
+      else{
+        Swal.fire({
+          title: 'Opps!',
+          text: data.message,
+          icon: 'info'
+        })
       }
       this.mensaje = data.message;
     })

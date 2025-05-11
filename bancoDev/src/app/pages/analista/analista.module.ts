@@ -5,6 +5,7 @@ import { CreditoComponent } from './credito/credito.component';
 import { ConsultaComponent } from './consulta/consulta.component';
 import { RouterModule } from '@angular/router';
 import { AnalistaRoutingModule } from './analista-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { AnalistaRoutingModule } from './analista-routing.module';
   imports: [
     CommonModule,
     RouterModule,
-    AnalistaRoutingModule
+    AnalistaRoutingModule,
+    ReactiveFormsModule,
   ]
 })
 export class AnalistaModule { }

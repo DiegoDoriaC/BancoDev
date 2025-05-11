@@ -1,17 +1,36 @@
-<div class="contenedor-prestamos"  *ngIf="listadoPrestamos.length > 0; else noData" >
-  <div [ngClass]="{
-    'prestamoPagado':item.estado == 'PAGADO',
-    'prestamoAtrasado':item.estado == 'ATRASADO',
-    'prestamoPendiente':item.estado == 'PENDIENTE',
-    }" [routerLink]="['/usuario/listaCuota', item.id]" class="prestamo" *ngFor="let item of listadoPrestamos">
-    <p>Monto Prestamo: {{ item.monto}}</p>
-    <p>Plazo meses: {{ item.plazoMeses }}</p>
-    <p>Fecha aprobacion: {{ item.fechaAprobacion }}</p>   <!-- aprobado -->
-    <p>Estado: {{ item.estado }}</p>
+<div class="contenedor-prestamos">
+
+  <div class="contenedor-izquierda">
+    <div class="contenedor-buttons">
+      <button class="boton-historial" (click)="activarMostrarHistorial()">Historial Prestamos</button>
+      <button class="boton-solicitar" (click)="activarSolicitudPrestamo()">Solicitar Prestamo</button>
+    </div>
   </div>
+
+  <div class="contenedor-derecha">
+    <div class="contenedor-historial" *ngIf="mostrarHistorial" >
+      <div *ngIf="listadoPrestamos.length > 0; else noData" >
+        <div [ngClass]="{
+          'prestamoPagado':item.estado == 'CANCELADO',
+          'prestamoAtrasado':item.estado == 'APROBADO',
+          'prestamoPendiente':item.estado == 'PENDIENTE',
+          }" [routerLink]="['/usuario/listaCuota', item.id]" class="prestamo" *ngFor="let item of listadoPrestamos">
+          <p>Monto Prestamo: {{ item.monto}}</p>
+          <p>Plazo meses: {{ item.plazoMeses }}</p>
+          <p>Fecha aprobacion: {{ item.fechaAprobacion }}</p>   <!-- aprobado -->
+          <p>Estado: {{ item.estado }}</p>
+        </div>
+      </div>
+      <ng-template #noData>
+        <h4>{{ mensaje }}</h4>
+      </ng-template>
+    </div>
+    <div class="pregunta-inicial" *ngIf="!solicitarPrestamo && !mostrarHistorial">
+      <h2>¿Que deseas hacer?</h2>
+    </div>
+    <div class="contenedor-solicitar-prestamo" *ngIf="solicitarPrestamo">
+      <app-solicitar-prestamo></app-solicitar-prestamo>
+    </div>
+  </div>
+
 </div>
-
-<ng-template #noData>
-  <h4>{{ mensaje }}</h4>
-</ng-template>
-

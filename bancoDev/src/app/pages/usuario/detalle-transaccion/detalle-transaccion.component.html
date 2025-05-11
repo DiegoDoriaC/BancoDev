@@ -1,7 +1,11 @@
 <div class="contenedor-transacciones" *ngIf="transaccion">
   <p class="num-transaccion">Transaccion: {{ transaccion.numeroTransaccion }}</p>
   <p class="monto">Monto: <strong class="monto-numero">S/{{ transaccion.monto }}</strong></p>
-  <p class="fecha">Fecha: {{transaccion.fecha  }}</p>
+  <p class="fecha">Fecha: {{ transaccion.fecha | date:'EEEE, dd MMM yyyy HH:mm:ss' }}</p>
   <p class="origen">De: {{ transaccion.numeroCuentaOrigen }}</p>
   <p class="destino">Para: {{ transaccion.numeroCuentaDestino }}</p>
+</div>
+
+<div class="contenedor-volver">
+  <a routerLink="/usuario">Volver al inicio</a>
 </div>

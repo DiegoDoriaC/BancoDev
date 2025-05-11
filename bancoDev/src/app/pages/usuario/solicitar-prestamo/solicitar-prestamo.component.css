@@ -1,0 +1,95 @@
+.contenedor-solicitar-prestamo{
+    margin-left: 200px;
+    width: 600px;
+    h1{
+        padding-top: 50px;
+        font-size: 45px;
+        text-align: center;
+    }
+    form{
+        padding-left: 80px;
+        label{
+            font-size: 25px;
+        }
+        div{
+            margin-top: 20px;
+        }
+        input{
+            margin-left: 20px;
+            font-size: 20px;
+            padding: 8px 10px;
+            width: 230px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        .input-sueldo{
+            margin-left: 44px !important;
+        }
+        select{
+            margin-left: 136px;
+            font-size: 20px;
+            padding: 8px 6px;
+            width: 253px;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contenedor-botones{
+            margin-top: 40px;
+            width: 100%;
+            margin-left: -30px;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+        button{
+            font-size: 20px;
+            padding: 8px 30px;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+}
+
+.contenedor-solicitar-prestamo-empleados{
+    margin-top: 20px;
+    width: 1020px;
+    text-align: center;
+    h1{
+        font-size: 45px;
+    }
+}
+
+.imagen-empleado{
+  border: 3px solid #c7c7c7 !important;
+}
+
+.figcaption{
+    font-size: 24px;
+}
+
+.seleccionada {
+  border: 3px solid #e76e45 !important;
+}
+
+.inactivo{
+    padding: 12px 35px;
+    font-size: 21px;
+    border: none;
+    border-radius: 8px;
+    cursor: not-allowed;
+    margin-top: 40px;
+}
+
+.activo{
+    padding: 12px 35px;
+    font-size: 21px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e76e45;
+    color: white;
+    cursor: pointer;
+    margin-top: 40px;
+}
+

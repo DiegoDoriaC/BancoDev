@@ -12,3 +12,8 @@
 .prestamo:hover{
   background-color: grey;
 }
+
+.mensaje-vacio{
+  margin: 100px 0 0 50px;
+  font-size: 25px;
+}

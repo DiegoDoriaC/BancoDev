@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TransferirDineroRequest } from 'src/app/interfaces/cuenta/TransferirDineroRequest';
 import { CuentaBancariaService } from 'src/app/services/cuenta-bancaria.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-realizar-transaccion',
@@ -19,27 +21,61 @@ export class RealizarTransaccionComponent {
   })
 
   constructor(
+      private _utils: UtilsService,
     private _cuenta: CuentaBancariaService
   ) {}
 
   onSubmit(){
-    this.transferirDinero()
+    const montoValor = this.formularioTransaferir.get('monto')?.value ?? ''
+    Swal.fire({
+      title: 'Esta seguro?',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      showConfirmButton: true,
+      confirmButtonText: 'Transferir',
+      text: 'Está seguro que desea transferir ' + montoValor + ' soles?',
+      icon: 'question',
+    }).then((resultado) => {
+      if(resultado.isConfirmed){
+        this.transferirDinero()              
+      }
+    })
   }
 
   transferirDinero(){
+    const data = this._utils.recuperarObjetoDelLocalStorage('usuario');
     const transferir: TransferirDineroRequest = {
-      clienteId: 3,
+      clienteId: data.id,
       monto: this.formularioTransaferir.get('monto')?.value ?? '',
       cuentaDestino: this.formularioTransaferir.get('cuentaDestino')?.value ?? '',
     }
 
-    this._cuenta.transferirDinero(transferir).subscribe(data => {
-      if(data.status){
-        this.mensaje = data.message;
-        this.estado = true
-      }else{
-        this.mensaje = data.message;
-        this.estado = false
+    this._cuenta.transferirDinero(transferir).subscribe({
+      next: (data) => {
+        if(data.status){
+          Swal.fire({
+            title: 'Exito!',
+            text: data.message,
+            icon: 'success',
+          }).then((result) => {
+            if(result.isConfirmed)
+              location.reload();
+          })
+        }
+        else{
+          Swal.fire({
+            title: 'Opps!',
+            text: data.message,
+            icon: 'info',
+          })
+        }
+      },
+      error: (error) => {
+        Swal.fire({
+          title: 'Error',
+          text: data.message,
+          icon: 'error',
+        })
       }
     })
   }

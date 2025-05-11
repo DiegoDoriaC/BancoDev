@@ -13,3 +13,15 @@
   font-size: 26px;
   font-weight: bolder;
 }
+
+.contenedor-volver{
+  margin: 60px 0 0 90px ;
+  a{
+    background-color: #ed6436;
+    font-style: none;
+    padding: 10px 35px;
+    font-size: 21px;
+    text-decoration: none;
+    color: white;
+  }
+}

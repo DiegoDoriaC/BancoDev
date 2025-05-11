@@ -3,8 +3,8 @@
     <a [routerLink]="['/usuario/detalleTransaccion', item.numeroTransaccion]" class="enlace">
       <div class="item-transaccion">
         <div class="item-izquierda">
-          <p class="num-transaccion">Transaccion: {{ item.numeroTransaccion }}</p>
-          <p class="fecha">Fecha: {{ item.fecha }}</p>
+          <p class="num-transaccion">N° transaccion: {{ item.numeroTransaccion }}</p>
+          <p class="fecha">Fecha: {{ item.fecha | date:'EEEE, dd MMM yyyy HH:mm:ss' }}</p>
         </div>
         <div class="item-derecha">
           <p class="monto-transaccion">Monto: {{ item.monto }}</p>
